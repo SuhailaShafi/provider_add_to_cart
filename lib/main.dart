@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:product_cart/pages/cart_page.dart';
 import 'package:product_cart/pages/product_page.dart';
+import 'package:product_cart/pages/wishlist.dart';
 import 'package:product_cart/providers/cart_provider.dart';
+import 'package:product_cart/providers/wishlist_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (context) => CartProvider(), child: const MyApp()));
+  runApp(MultiProvider(providers: [
+    ListenableProvider<CartProvider>(create: (context) => CartProvider()),
+    ListenableProvider<WishListProvider>(
+        create: (context) => WishListProvider()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,6 +30,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/products": (context) => ProductPage(),
         "/cart": (context) => CartPage(),
+        "/wishlist": (context) => WishListPage(),
       },
     );
   }
